@@ -1,0 +1,25 @@
+[project]
+name = "tnf_abfahrtstafel"
+version = "0.0.1"
+requires-python = ">=3.8"
+dependencies = [
+  "pillow>=10",
+  "requests>=2.31",
+]
+maintainers = [
+  {name = "Gabriel Eckertsberger", email = "gabriel.eckertsberger@oeh.jku.at"},
+]
+classifiers = [
+  "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+]
+
+[project.scripts]
+tnf-abfahrtstafel-show = "tnf_abfahrtstafel:show_main"
+tnf-abfahrtstafel-epaper = "tnf_abfahrtstafel:epaper_main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tnf_abfahrtstafel"]
