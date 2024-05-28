@@ -19,8 +19,9 @@ def render_departures(departures):
     offset = 200
     for dep in departures['1']:
       minutes = math.floor(max(dep / timedelta(minutes=1), 0))
-      draw.text((offset, 5), f'{minutes}\'', font=font)
-      offset += 200
+      if minutes < 100:
+        draw.text((offset, 5), f'{minutes}\'', font=font)
+        offset += 200
 
   draw.rounded_rectangle([10,110+10,10+65,110+10+100], 5, fill=0)
   draw.text((15, 110+5), '2', font=font, fill=1)
@@ -29,7 +30,8 @@ def render_departures(departures):
     offset = 200
     for dep in departures['2']:
       minutes = math.floor(max(dep / timedelta(minutes=1), 0))
-      draw.text((offset, 110+5), f'{minutes}\'', font=font)
-      offset += 200
+      if minutes < 100:
+        draw.text((offset, 110+5), f'{minutes}\'', font=font)
+        offset += 200
 
   return image
