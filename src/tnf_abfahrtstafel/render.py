@@ -8,7 +8,7 @@ width = 960
 height = 680
 
 font = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'Roboto-Bold.ttf'), 100)
-smallfont = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'Roboto-Bold.ttf'), 60)
+smallfont = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'Roboto-Regular.ttf'), 60)
 
 def render_departures(departures):
   image = Image.new('1', (width, height), 1)
@@ -54,6 +54,7 @@ def render_bus(draw, yoffset, dep):
   draw.text((10+100, yoffset+5), dep['line'], font=font, anchor="ma", fill=0)
 
   draw.text((240,yoffset+25), dep['dest'], font=smallfont, fill=1)
+  draw.rectangle([width-150, yoffset+10,width,yoffset+10+100], fill=0)
 
   minutes = math.floor(max(dep['reltime'] / timedelta(minutes=1), 0))
   draw.text((380+3*190, yoffset+5), f'{minutes}\'', font=font, anchor="ra", fill=1)
