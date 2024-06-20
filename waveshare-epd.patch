@@ -1,0 +1,76 @@
+diff --git a/pyproject.toml b/pyproject.toml
+new file mode 100644
+index 0000000..fe9d721
+--- /dev/null
++++ b/pyproject.toml
+@@ -0,0 +1,17 @@
++[project]
++name = "waveshare-epd"
++version = "0.0.1"
++requires-python = ">=3.8"
++dependencies = [
++  "pillow>=10",
++  "spidev>=3.6",
++  "gpiozero>=2.0",
++  #"RPi.GPIO2>=0.4",
++]
++
++[build-system]
++requires = ["hatchling"]
++build-backend = "hatchling.build"
++
++[tool.hatch.build.targets.wheel]
++packages = ["lib/waveshare_epd"]
+diff --git a/setup.py b/setup.py
+deleted file mode 100644
+index 37d998e..0000000
+--- a/setup.py
++++ /dev/null
+@@ -1,21 +0,0 @@
+-import sys, os
+-from setuptools import setup
+-
+-dependencies = ['Pillow']
+-
+-if os.path.exists('/sys/bus/platform/drivers/gpiomem-bcm2835'):
+-    dependencies += ['RPi.GPIO', 'spidev']
+-elif os.path.exists('/sys/bus/platform/drivers/gpio-x3'):
+-    dependencies += ['Hobot.GPIO', 'spidev']
+-else:
+-    dependencies += ['Jetson.GPIO']
+-
+-setup(
+-    name='waveshare-epd',
+-    description='Waveshare e-Paper Display',
+-    author='Waveshare',
+-    package_dir={'': 'lib'},
+-    packages=['waveshare_epd'],
+-    install_requires=dependencies,
+-)
+-
+diff --git a/lib/waveshare_epd/epdconfig.py b/lib/waveshare_epd/epdconfig.py
+index b390252..147fd95 100644
+--- a/lib/waveshare_epd/epdconfig.py
++++ b/lib/waveshare_epd/epdconfig.py
+@@ -301,20 +301,7 @@ class SunriseX3:
+         self.GPIO.cleanup([self.RST_PIN, self.DC_PIN, self.CS_PIN, self.BUSY_PIN], self.PWR_PIN)
+
+
+-if sys.version_info[0] == 2:
+-    process = subprocess.Popen("cat /proc/cpuinfo | grep Raspberry", shell=True, stdout=subprocess.PIPE)
+-else:
+-    process = subprocess.Popen("cat /proc/cpuinfo | grep Raspberry", shell=True, stdout=subprocess.PIPE, text=True)
+-output, _ = process.communicate()
+-if sys.version_info[0] == 2:
+-    output = output.decode(sys.stdout.encoding)
+-
+-if "Raspberry" in output:
+-    implementation = RaspberryPi()
+-elif os.path.exists('/sys/bus/platform/drivers/gpio-x3'):
+-    implementation = SunriseX3()
+-else:
+-    implementation = JetsonNano()
++implementation = RaspberryPi()
+
+ for func in [x for x in dir(implementation) if not x.startswith('_')]:
+     setattr(sys.modules[__name__], func, getattr(implementation, func))

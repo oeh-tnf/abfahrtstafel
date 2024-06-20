@@ -10,7 +10,10 @@
         eachSystem = nixpkgs.lib.genAttrs (import systems);
       in
       eachSystem (system: {
-        default = nixpkgs.legacyPackages.${system}.callPackage ./package.nix {};
+        default = nixpkgs.legacyPackages.${system}.callPackage ./package.nix {
+          waveshare-epd = self.packages.${system}.waveshare-epd;
+        };
+        waveshare-epd = nixpkgs.legacyPackages.${system}.callPackage ./waveshare-epd.nix {};
       });
   };
 }
