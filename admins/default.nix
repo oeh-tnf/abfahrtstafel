@@ -1,0 +1,3 @@
+{
+  gabriel = import ./gabriel.nix;
+}
