@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./usb_otg.nix
+  ];
+
   boot = {
     # This was necessary for testing at /dev/lol, because of 2.4/5Ghz hybrid wifi
     extraModprobeConfig = ''
@@ -15,9 +19,13 @@
 
   networking = {
     hostName = "tnf-abfahrtstafel";
+    useDHCP = false;
     interfaces = {
       wlan0 = {
         useDHCP = true;
+      };
+      usb0 = {
+        useDHCP = false;
       };
     };
     wireless = {
