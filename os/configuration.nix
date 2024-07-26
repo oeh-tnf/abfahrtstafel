@@ -1,8 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, abfahrtstafel-pkg, ... }:
 
 {
   imports = [
     ./usb_otg.nix
+    ./spi.nix
   ];
 
   boot = {
@@ -14,6 +15,8 @@
 
   # We need that for wifi
   hardware.enableRedistributableFirmware = true;
+
+  hardware.deviceTree.filter = "bcm2837-rpi-*.dtb";
 
   age.secrets.wifi.file = secrets/wifi.age;
 
@@ -42,6 +45,8 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    dtc
+    abfahrtstafel-pkg
   ];
 
   users = {
