@@ -35,6 +35,9 @@
       enable = true;
       environmentFile = config.age.secrets.wifi.path;
       networks = {
+        "ÖH Büro" = {
+          psk = "@PSK_OEH_BUERO@";
+        };
         # for testing
         "/dev/lol" = {
           psk = "@PSK_DEVLOL@";
