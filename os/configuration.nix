@@ -13,6 +13,29 @@
     '';
   };
 
+  hardware.deviceTree.overlays = [
+    {
+      name = "putThatDamnRevisionInThere";
+      dtsText = ''
+        /dts-v1/;
+        /plugin/;
+
+        / {
+          compatible = "brcm,bcm2837";
+
+          fragment@0 {
+            target-path = "/";
+            __overlay__ {
+              system {
+                linux,revision = <0x902120>;
+              };
+            };
+          };
+        };
+      '';
+    }
+  ];
+
   # We need that for wifi
   hardware.enableRedistributableFirmware = true;
 

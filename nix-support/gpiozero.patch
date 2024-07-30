@@ -1,0 +1,21 @@
+diff --git a/gpiozero/pins/rpigpio.py b/gpiozero/pins/rpigpio.py
+index 386fc22..7e6fe9a 100644
+--- a/gpiozero/pins/rpigpio.py
++++ b/gpiozero/pins/rpigpio.py
+@@ -96,7 +96,7 @@ class RPiGPIOPin(LocalPiPin):
+         self._pwm = None
+         self._frequency = None
+         self._duty_cycle = None
+-        self._bounce = -666
++        self._bounce = None
+         self._edges = GPIO.BOTH
+         GPIO.setup(self._number, GPIO.IN, self.GPIO_PULL_UPS[self._pull])
+
+@@ -198,7 +198,7 @@ class RPiGPIOPin(LocalPiPin):
+         f = self.when_changed
+         self.when_changed = None
+         try:
+-            self._bounce = -666 if value is None else int(value * 1000)
++            self._bounce = None if value is None else int(value * 1000)
+         finally:
+             self.when_changed = f

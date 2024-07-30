@@ -1,6 +1,8 @@
 { lib
 , fetchFromGitHub
 , python3Packages
+, rpi-gpio2
+, gpiozero
 , hatch
 }:
 
@@ -28,6 +30,6 @@ python3Packages.buildPythonPackage rec {
     pillow
     spidev
     gpiozero
-    #rpi-gpio2
+    rpi-gpio2
   ];
 }

@@ -29,7 +29,18 @@
         };
         waveshare-epd = nixpkgs.legacyPackages.${system}.callPackage nix-support/waveshare-epd.nix {
           hatch = self.packages.${system}.hatch;
+          rpi-gpio2 = self.packages.${system}.rpi-gpio2;
+          gpiozero = self.packages.${system}.gpiozero;
         };
+        gpiozero = nixpkgs.legacyPackages.${system}.python3Packages.gpiozero.overridePythonAttrs (old: {
+          patches = [ ./nix-support/gpiozero.patch ];
+        });
+        rpi-gpio2 = nixpkgs.legacyPackages.${system}.python3Packages.rpi-gpio2.override (old: {
+          libgpiod = self.packages.${system}.libgpiod_1;
+        });
+        libgpiod_1 = nixpkgs.legacyPackages.${system}.libgpiod_1.override (old: {
+          enablePython = true;
+        });
       });
     apps =
       let
