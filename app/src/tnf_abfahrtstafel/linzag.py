@@ -21,12 +21,17 @@ lines = {
   },
   '77': {
     'default_dest':'60501720', # Hauptbahnhof
-    'mode':'bus'
+    'mode':'bus77'
+  },
+  'SE': {
+    'default_dest':'60501100', # Rudolfstraße
+    'mode':'SEV Schienenersatzverkehr'
   }
 }
 
 ignore_dests = [
   '60500921', # JKU Nord
+  '60500920', # JKU (only needed for SEV)
 ]
 
 def get_raw_departures(now, stop):
@@ -55,7 +60,7 @@ def get_departures(now, stop):
     deps[line].append({
       'line': line,
       'mode': lines[line]['mode'],
-      'dest': dep['transportation']['destination']['name'],
+      'dest': dep['transportation']['destination']['name'] if line!='77' else "Linz Hbf", # to avoid Linz/Donau Hauptbahnhof
       'abstime': time,
       'reltime': time-now,
       'special': destid != lines[line]['default_dest']
