@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import requests
 
@@ -8,7 +8,7 @@ stops = {
 
 tz = ZoneInfo("Europe/Vienna")
 
-def get_raw_departures(stop):
+def get_raw_departures(now, stop):
   return requests.post('https://verkehrsauskunft.ooevv.at/bin/mgate.exe', json={
     "ver": "1.59",
     "lang": "deu",
@@ -29,6 +29,8 @@ def get_raw_departures(stop):
           "mode":"INC",
           "value":1088
         }],
+        "date":now.strftime("%Y%m%d"),
+        "time":now.strftime("%H%M%S"),
         "type":"DEP",
         "sort":"PT",
         "maxJny":40
@@ -38,7 +40,7 @@ def get_raw_departures(stop):
   }).json()
 
 def get_departures(now, stop):
-  raw = get_raw_departures(stop)['svcResL'][0]['res']
+  raw = get_raw_departures(now, stop)['svcResL'][0]['res']
   deps = {}
   for dep in raw['jnyL']:
     line = raw['common']['prodL'][dep['prodX']]['number']
@@ -69,4 +71,3 @@ def get_departures(now, stop):
       'special': False,
     })
   return deps
-

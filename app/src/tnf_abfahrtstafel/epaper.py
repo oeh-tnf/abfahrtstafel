@@ -3,6 +3,7 @@ import os
 from datetime import datetime, timezone
 from PIL import ImageShow
 from waveshare_epd import epd13in3k
+import pytz
 
 from . import linzag, render, ooevv
 
@@ -12,7 +13,7 @@ def epaper_main():
 
   print("initialized")
 
-  now = datetime.now(timezone.utc)
+  now = datetime.now(pytz.timezone('Europe/Vienna'))
   deps = linzag.get_departures(now, linzag.stops['jku']) | ooevv.get_departures(now, ooevv.stops['jku'])
   image = render.render_departures(deps, now)
 

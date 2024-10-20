@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import re
 import requests
 
@@ -29,7 +29,7 @@ ignore_dests = [
   '60500921', # JKU Nord
 ]
 
-def get_raw_departures(stop):
+def get_raw_departures(now, stop):
   return requests.get('https://www.linzag.at/linz-efa/XML_DM_REQUEST',
     params = {
       'mode':'direct',
@@ -37,10 +37,12 @@ def get_raw_departures(stop):
       'outputFormat':'rapidJSON',
       'type_dm':'any',
       'useRealtime':'1',
+      'itdDate': now.strftime("%Y%m%d"),
+      'itdTime': now.strftime("%H%M"),
     }).json()
 
 def get_departures(now, stop):
-  raw = get_raw_departures(stop)
+  raw = get_raw_departures(now, stop)
   deps = {}
   for dep in raw['stopEvents']:
     line = dep['transportation']['number']
