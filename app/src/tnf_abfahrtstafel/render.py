@@ -1,16 +1,20 @@
 from itertools import islice
 from datetime import timedelta
+from zoneinfo import ZoneInfo
 import math
 import os
 from PIL import Image, ImageDraw, ImageFont
+
+tz = ZoneInfo("Europe/Vienna")
 
 width = 960
 height = 680
 
 font = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'Roboto-Bold.ttf'), 100)
 smallfont = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'Roboto-Regular.ttf'), 60)
+tinyfont = ImageFont.truetype(os.path.join(os.path.dirname(__file__),'Roboto-Regular.ttf'), 12)
 
-def render_departures(departures):
+def render_departures(departures, time):
   image = Image.new('1', (width, height), 1)
   draw = ImageDraw.Draw(image)
 
@@ -35,6 +39,8 @@ def render_departures(departures):
       yoff += 110
     if yoff > height:
       break
+
+  draw.text((width-2, 0),time.astimezone(tz).strftime("%H:%M"), font=tinyfont, anchor="ra", fill=0);
 
   return image
 

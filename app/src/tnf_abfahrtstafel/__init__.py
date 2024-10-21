@@ -8,4 +8,4 @@ def show_main():
   print('Hello, World!')
   deps = linzag.get_departures(now, linzag.stops['jku']) | ooevv.get_departures(now, ooevv.stops['jku'])
   print(deps)
-  ImageShow.show(render.render_departures(deps))
+  ImageShow.show(render.render_departures(deps, now))

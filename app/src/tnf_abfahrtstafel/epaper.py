@@ -1,4 +1,4 @@
-import sys
+import os
 
 from datetime import datetime, timezone
 from PIL import ImageShow
@@ -14,7 +14,7 @@ def epaper_main():
 
   now = datetime.now(timezone.utc)
   deps = linzag.get_departures(now, linzag.stops['jku']) | ooevv.get_departures(now, ooevv.stops['jku'])
-  image = render.render_departures(deps)
+  image = render.render_departures(deps, now)
 
   print("rendered")
 
@@ -22,4 +22,4 @@ def epaper_main():
 
   print("shown")
 
-  sys.exit()
+  os._exit(0)
