@@ -1,6 +1,9 @@
 from datetime import datetime, timezone
 import re
 import requests
+from zoneinfo import ZoneInfo
+
+tz = ZoneInfo("Europe/Vienna")
 
 stops = {
   'jku': 'at:44:41101',
@@ -47,6 +50,7 @@ def get_raw_departures(now, stop):
     }).json()
 
 def get_departures(now, stop):
+  now = now.astimezone(tz)
   raw = get_raw_departures(now, stop)
   deps = {}
   for dep in raw['stopEvents']:
