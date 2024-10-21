@@ -84,4 +84,16 @@
     }
   ];
 
+  systemd.services.spidev-bind = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    script = ''
+      sleep 10s
+      echo spidev >/sys/bus/spi/devices/spi0.0/driver_override
+      echo spi0.0 >/sys/bus/spi/drivers/spidev/bind
+    '';
+  };
 }
