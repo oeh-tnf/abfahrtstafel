@@ -72,7 +72,6 @@
   environment.systemPackages = with pkgs; [
     vim
     dtc
-    abfahrtstafel-pkg
   ];
 
   users = {
@@ -86,6 +85,26 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
+    };
+  };
+
+  systemd.services.abfahrtstafel-update = {
+    enable = true;
+    serviceConfig = {
+      Type = "oneshot";
+    };
+    script = ''
+      ${abfahrtstafel-pkg}/bin/tnf-abfahrtstafel-epaper
+    '';
+    after = [ "spidev-bind.service" ];
+  };
+
+  systemd.timers.abfahrtstafel-update = {
+    enable = true;
+    wantedBy = [ "multi-user.target" ];
+    after = [ "spidev-bind.service" ];
+    timerConfig = {
+      OnCalendar = "minutely";
     };
   };
 
