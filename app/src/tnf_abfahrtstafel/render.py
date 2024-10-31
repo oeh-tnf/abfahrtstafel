@@ -68,7 +68,7 @@ def render_tram(draw, yoffset, line, line_deps):
     if minutes < 100:
       if dep["special"]:
         draw.text((xoffset, yoffset+5), f'{minutes}\'', font=semifont, anchor="ra", fill= 0)
-        draw.text((xoffset, yoffset+78), f'{dep['dest'][11:20]+'.'}', font=extrasmallfont, anchor="ra", fill=0)
+        draw.text((xoffset, yoffset+78), f'{dep["dest"][11:20]+"."}', font=extrasmallfont, anchor="ra", fill=0)
       else:
         draw.text((xoffset, yoffset+5), f'{minutes}\'', font=font, anchor="ra", fill= 0)
       xoffset += 190
@@ -86,7 +86,7 @@ def render_bus_77(draw, yoffset, line, line_deps):
     if minutes < 100:
       if dep["special"]:
         draw.text((xoffset, yoffset+5), f'{minutes}\'', font=semifont, anchor="ra", fill= 0)
-        draw.text((xoffset, yoffset+80), f'{dep['dest'][11:23]+'.'}', font=extrasmallfont, anchor="ra", fill=1)
+        draw.text((xoffset, yoffset+80), f'{dep["dest"][11:23]+"."}', font=extrasmallfont, anchor="ra", fill=1)
       else:
         draw.text((xoffset, yoffset+5), f'{minutes}\'', font=font, anchor="ra", fill= 1)
       xoffset += 190
