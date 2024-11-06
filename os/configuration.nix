@@ -58,8 +58,8 @@
       enable = true;
       environmentFile = config.age.secrets.wifi.path;
       networks = {
-        "ÖH Büro" = {
-          psk = "@PSK_OEH_BUERO@";
+        "KEPLERnet" = {
+          psk = "@PSK_KEPLERNET@";
         };
         # for testing
         "/dev/lol" = {
