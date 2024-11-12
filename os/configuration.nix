@@ -92,10 +92,9 @@
     enable = true;
     serviceConfig = {
       Type = "oneshot";
+      TimeoutStartSec = "45";
     };
-    script = ''
-      ${abfahrtstafel-pkg}/bin/tnf-abfahrtstafel-epaper
-    '';
+    script = "${abfahrtstafel-pkg}/bin/tnf-abfahrtstafel-epaper";
     after = [ "spidev-bind.service" ];
   };
 
